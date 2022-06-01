@@ -1,18 +1,18 @@
 import requests
 
-# from auth import get_authentication_token
+from token_path import token_path
 
 
-# headers = get_authentication_token()
+with open(f'{token_path}rating_api_token.txt') as read_file:
+    token = read_file.readlines()
 
-# if headers:
-token = "18df89ed39251d49ca145d35e91e9b82f107ad63"
 endpoint = "http://localhost:8000/api/products/"
 
 data = {
-    "name": "Light-Beer",
-    "price": 8.99,
+    "name": "Lamp",
+    "price": 12.21,
 }
 get_response = requests.post(endpoint, json=data, headers={
-    "Authorization": f"Token {token}"})
+    "Authorization": f"Token {token[0]}"})
+
 print(get_response.json())
