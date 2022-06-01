@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from products.models import Product, Rating
-# from . import validators
+from api.models import Product, Rating
+
 from django.contrib.auth import get_user_model
 
 
