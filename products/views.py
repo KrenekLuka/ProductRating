@@ -1,8 +1,9 @@
 from rest_framework import generics
-from rest_framework import permissions
+from rest_framework import permissions, filters
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import get_object_or_404
 from statistics import mean
+from django_filters.rest_framework import DjangoFilterBackend
 
 from products.models import Product, Rating
 
@@ -13,6 +14,12 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    filter_backends = [DjangoFilterBackend,
+                       filters.SearchFilter, filters.OrderingFilter]
+
+    filterset_fields = ['name', 'price', 'id', 'rating']
+    search_fields = ['name', 'price', 'id', 'rating']
+    ordering_fields = ['name', 'price', 'id', 'rating']
 
     def perform_create(self, serializer):
         name = serializer.validated_data.get('name')

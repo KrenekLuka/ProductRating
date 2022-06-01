@@ -5,3 +5,4 @@ pyyaml
 requests
 django-cors-headers
 psycopg2>=2.8
+django_filter

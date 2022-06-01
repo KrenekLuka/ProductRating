@@ -9,8 +9,8 @@ with open(f'{token_path}rating_api_token.txt') as read_file:
 endpoint = "http://localhost:8000/api/products/"
 
 data = {
-    "name": "Lamp",
-    "price": 12.21,
+    "name": "Pear",
+    "price": 0.00,
 }
 get_response = requests.post(endpoint, json=data, headers={
     "Authorization": f"Token {token[0]}"})
