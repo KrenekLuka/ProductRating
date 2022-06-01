@@ -1,6 +1,12 @@
-docker-compose run web bash
  docker-compose up -d
-  docker-compose down
-   docker-compose logs -f
+ 
+ docker-compose run web bash
 
-   docker-compose build
+ python manage.py makemigrations
+ python manage.py migrate
+ python manage.py createsuperuser
+
+docker-compose down
+docker-compose logs -f
+
+docker-compose build
