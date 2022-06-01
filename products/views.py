@@ -7,7 +7,21 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from products.models import Product, Rating
 
-from products.serializers import ProductSerializer, RatingSerializer
+from products.serializers import ProductSerializer, RatingSerializer, UserSerializer
+
+from django.contrib.auth import get_user_model  # If used custom user model
+
+
+class CreateUserView(generics.CreateAPIView):
+
+    model = get_user_model()
+    permission_classes = [
+        permissions.AllowAny  # Or anon users can't register
+    ]
+    serializer_class = UserSerializer
+
+
+create_user_view = CreateUserView.as_view()
 
 
 class ProductListCreateAPIView(generics.ListCreateAPIView):

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from products.models import Product, Rating
 # from . import validators
+from django.contrib.auth import get_user_model
 
 
 class RatingSerializer(serializers.ModelSerializer):
@@ -36,3 +37,24 @@ class ProductSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 f"{value} is already a product name.")
         return value
+
+
+UserModel = get_user_model()
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    password = serializers.CharField(write_only=True)
+
+    def create(self, validated_data):
+
+        user = UserModel.objects.create_superuser(
+            username=validated_data['username'],
+            password=validated_data['password']
+        )
+
+        return user
+
+    class Meta:
+        model = UserModel
+        fields = ("id", "username", "password", )
