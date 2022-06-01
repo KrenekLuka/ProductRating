@@ -1,12 +1,10 @@
-from django.http import JsonResponse
-
-
 from rest_framework import generics
 from rest_framework import permissions, filters
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import get_object_or_404
 from statistics import mean
 from django_filters.rest_framework import DjangoFilterBackend
+from django.http import JsonResponse
 
 from api.models import Product, Rating
 
@@ -90,6 +88,10 @@ class RatingListCreateAPIView(generics.ListCreateAPIView):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    filter_backends = [filters.OrderingFilter]
+
+    ordering_fields = ['author', 'product_id', 'rating']
 
     def perform_create(self, serializer):
         product_id = self.request.data["product_id"]
